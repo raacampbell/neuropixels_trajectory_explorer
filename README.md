@@ -3,8 +3,10 @@
 # Neuropixels trajectory explorer
 Neuropixels trajectory explorer with the Allen CCF mouse atlas or Waxholm rat atlas. See changelog below for history of updates.
 
-## This branch
-**NOTE: This fork is made in order to develop functionality for a different project. It still works but is substantially refactored comapared with the original and so will likely diverge. **
+**Keep the GUI up-to-date:** there are semi-regular upgrades (sometimes just a feature, sometimes something critical like getting a better estimate of distances and angles), so make sure to pull the current repository whenever planning a new trajectory.
+
+## This Branch
+**NOTE: This fork is made in order to develop functionality for a different project. It still works but is substantially refactored comapared with the original and so will likely diverge.**
 
 
 For example, you can set the probe position at the command line as follows:
@@ -14,8 +16,8 @@ For example, you can set the probe position at the command line as follows:
 pa_gui = neuropixels_trajectory_explorer(tv,av,st);
 
 % Now set the entry and end points of the probe
-nte.set_probe_entry([],[],pa_gui,[2,2,0,0])
-nte.set_probe_endpoint([],[],pa_gui,[2,2,5,0,90])
+nte.set_probe_entry([], [], pa_gui, [2,2,0,0])
+nte.set_probe_endpoint([], [], pa_gui, [2,2,5,0,90])
 ```
 
 This command places a vertical probe at a define AP = -2, ML = 1, and with a DV depth of 4 mm below bregma.
@@ -23,9 +25,8 @@ This command places a vertical probe at a define AP = -2, ML = 1, and with a DV 
 nte.set_vertical_probe(pa_gui, -2, 1, 4)
 ```
 
-**Keep the GUI up-to-date:** there are semi-regular upgrades (sometimes just a feature, sometimes something critical like getting a better estimate of distances and angles), so make sure to pull the current repository whenever planning a new trajectory.
 
-Mouse CCF scaling, rotation, and bregma notes:
+### Mouse CCF scaling, rotation, and bregma notes
 * the CCF is slightly stretched in the DV axis (because it's based on a single mouse with an unsually tall brain), currently estimated here as 94.3%
 * The CCF AP rotation is arbitrary with reference to the skull, and this angle has been estimated as 5 degrees (from https://www.biorxiv.org/content/10.1101/2022.05.09.491042v3). This is implemented here, with the CCF being tilted nose-down by 5 degrees.
 * Bregma has been approximated in AP by matching the Paxinos atlas slice at AP=0 to the CCF, the ML position is the midline, and the DV position is a very rough approximation from matching an MRI image (this DV coordinate shouldn't be used - all actual coordinates should be measured from the brain surface for better accuracy)
@@ -111,11 +112,11 @@ During the experiment:
 - Zero the depth coordinate (along the probe-axis), then descend until the desired depth is reached
 
 ## Changelog
-2022-09-23: Changed CCF rotation to 5 degrees AP (clarification from IBL paper)
-2022-07-20: Updated position readout for clarification
-2022-05-20: Added rat trajectory explorer ('neuropixels_trajectory_explorer_rat')
-2022-05-18: Changed coordinate system to allow for more flexible coordinate changes in future (including user-set scalings/rotations)
-2022-05-17: Rotated CCF 7 degrees in AP to line up to a leveled bregma-lambda (angle from https://www.biorxiv.org/content/10.1101/2022.05.09.491042v3.full.pdf)
-2021-12-15: Added 'set endpoint' functionality, approximated bregma DV (from MRI - very rough)
+* 2022-09-23: Changed CCF rotation to 5 degrees AP (clarification from IBL paper)
+* 2022-07-20: Updated position readout for clarification
+* 2022-05-20: Added rat trajectory explorer ('neuropixels_trajectory_explorer_rat')
+* 2022-05-18: Changed coordinate system to allow for more flexible coordinate changes in future (including user-set scalings/rotations)
+* 2022-05-17: Rotated CCF 7 degrees in AP to line up to a leveled bregma-lambda (angle from https://www.biorxiv.org/content/10.1101/2022.05.09.491042v3.full.pdf)
+* 2021-12-15: Added 'set endpoint' functionality, approximated bregma DV (from MRI - very rough)
 
 
