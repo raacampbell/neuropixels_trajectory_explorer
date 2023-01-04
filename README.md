@@ -45,8 +45,8 @@ Any issues/bugs/suggestions, please open a github issue by clicking on the 'Issu
 - Download/clone the NPY-matlab repository: https://github.com/kwikteam/npy-matlab
 (this is code to load the formatted CCF atlas)
 
-- Add to MATLAB path: the folders with the atlas, the NPY-matlab repository, and this repository
-(File > Set Path > Add with subfolders... > select the downloaded folder (have to do this for each folder separately), then hit 'Save' and 'Close')
+- Add to MATLAB path: the folders with the atlas, the NPY-matlab repository, and the `code` directory from this repository
+(File > Set Path > Add folder > select the downloaded folder (have to do this for each folder separately), then hit 'Save' and 'Close')
 
 - Run the command in MATLAB:
 
