@@ -28,14 +28,17 @@ function draw_top_down_ccf(av, st)
     end
 
 
-    % Get first brain pixel from top-down, get annotation at that point
+    % Get first brain pixel from top-down
     [~,top_down_depth] = max(av>1, [], 2);
     top_down_depth = squeeze(top_down_depth);
 
+
+    % Now get the annotation from the atlas at that point. The annotation tells us the brain area
     [xx,yy] = meshgrid(1:size(top_down_depth,2), 1:size(top_down_depth,1));
     top_down_annotation = reshape(av(sub2ind(size(av),yy(:),top_down_depth(:),xx(:))), size(av,1), size(av,3));
 
-    % Get all labelled areas
+
+    % The brain areas present in the annotation (so we search only these)
     used_areas = unique(top_down_annotation(:));
 
     % Restrict to only cortical areas
@@ -47,15 +50,31 @@ function draw_top_down_ccf(av, st)
 
     plot_areas = intersect(used_areas,ctx_idx);
 
-    % Get outlines and names of all areas
+
+
+    % Get outlines and names of all cortical areas visible from top-down
     dorsal_cortical_areas = ...
         struct('boundaries',cell(size(plot_areas)),'names',cell(size(plot_areas)));
+
+    % Tidy names
     for curr_area_idx = 1:length(plot_areas)
         dorsal_cortical_areas(curr_area_idx).boundaries = ...
             bwboundaries(top_down_annotation == plot_areas(curr_area_idx));
+
+        t_name = st.safe_name(plot_areas(curr_area_idx));
+
         % (dorsal areas are all "layer 1" - remove that)
-        dorsal_cortical_areas(curr_area_idx).names = ...
-            regexprep(st.safe_name(plot_areas(curr_area_idx)),'..ayer 1','');
+        t_name = regexprep(t_name,'..ayer 1','');
+
+        % Remove the term "area", as it's obvious and makes the names long
+        t_name = regexprep(t_name,'area','');
+        t_name = regexprep(t_name,'  ',' ');
+
+        % Replace "Primary" with 1' and "Secondary" with 2'
+        t_name = regexprep(t_name,'Primary','1''');
+        t_name = regexprep(t_name,'Secondary','2''');
+
+        dorsal_cortical_areas(curr_area_idx).names  = t_name;
     end
 
     % Convert boundary units to stereotaxic coordinates in mm
@@ -73,9 +92,14 @@ function draw_top_down_ccf(av, st)
     bregma_color = 'r';
     grid_spacing = 1; % in mm
 
-    figure; 
-
-    ax = axes; hold on; axis equal; grid on;
+    fig = figure(45234);
+    clf(fig)
+    ax = axes;
+    hold(ax,'on')
+    axis equal
+    grid on
+    box on
+    
     ax.GridColor = grid_color;
     xticks(ax,-5:grid_spacing:5);
     yticks(ax,-5:grid_spacing:5);
@@ -85,10 +109,11 @@ function draw_top_down_ccf(av, st)
         {dorsal_cortical_areas.boundaries_stereotax},'uni',false);
 
     % Write area labels (left hemisphere)
-    cellfun(@(x,y) text('Position',fliplr(mean(x{1},1)),'String',y), ...
+    cellfun(@(x,y) text('Position',fliplr(mean(x{1}+0.05,1)),'String',y, 'Color', [0,0,0.5]), ...
         {dorsal_cortical_areas.boundaries_stereotax}, ...
         {dorsal_cortical_areas.names});
-    cellfun(@(x,y) plot(mean(x{1}(:,2)),mean(x{1}(:,1)),'.b'), ...
+
+    cellfun(@(x,y) plot(mean(x{1}(:,2)),mean(x{1}(:,1)),'.b', 'MarkerSize', 10), ...
         {dorsal_cortical_areas.boundaries_stereotax});
 
     % Plot bregma
