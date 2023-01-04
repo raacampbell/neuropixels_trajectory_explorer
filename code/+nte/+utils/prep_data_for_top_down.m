@@ -25,11 +25,6 @@ function td_data = prep_data_for_top_down(av, st)
     % grid on
     %
 
-
-
-
-
-
     if nargin < 1 || isempty(av)
         av = nte.return_atlas;
     end
@@ -70,7 +65,8 @@ function td_data = prep_data_for_top_down(av, st)
     % Get outlines and names of all cortical areas visible from top-down
     dorsal_cortical_areas = struct(...
             'boundaries', cell(size(plot_areas)), ...
-            'names',cell(size(plot_areas)) ...
+            'names',cell(size(plot_areas)), ...
+            'area_index', [] ...
             );
 
     % Tidy names
@@ -92,6 +88,7 @@ function td_data = prep_data_for_top_down(av, st)
         t_name = regexprep(t_name, 'Secondary', '2''');
 
         dorsal_cortical_areas(curr_area_idx).names  = t_name;
+        dorsal_cortical_areas(curr_area_idx).area_index = plot_areas(curr_area_idx);
     end
     
 
@@ -117,7 +114,4 @@ function td_data = prep_data_for_top_down(av, st)
     td_data.top_down_annotation = top_down_annotation;
     td_data.X = X;
     td_data.Y = Y;
-
-
-
 
