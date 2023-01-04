@@ -1,4 +1,4 @@
-function d
+function td_data = prep_data_for_top_down(av, st)
     % Generate data needed for making the top-down plot
     % 
     % function td_data = prep_data_for_top_down(av, st)
@@ -26,6 +26,8 @@ function d
     if nargin < 2 || isempty(st)
         st = nte.return_structure_tree;
     end
+
+
 
 
     % Get first brain pixel from top-down

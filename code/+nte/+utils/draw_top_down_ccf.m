@@ -27,6 +27,7 @@ function  draw_top_down_ccf(plt_data)
 
     fig = figure(45234);
     clf(fig)
+
     ax = axes;
     hold(ax,'on')
     axis equal
@@ -34,12 +35,12 @@ function  draw_top_down_ccf(plt_data)
     box on
     
     ax.GridColor = grid_color;
-    xticks(ax,-5:grid_spacing:5);
-    yticks(ax,-5:grid_spacing:5);
+    xticks(ax, -5:grid_spacing:5);
+    yticks(ax, -5:grid_spacing:5);
 
     % Draw cortical boundaries
     cellfun(@(x) cellfun(@(x) plot(x(:,2),x(:,1),'color',brain_color),x,'uni',false), ...
-        {plt_data.dorsal_cortical_areas.boundaries_stereotax},'uni',false);
+        {plt_data.dorsal_cortical_areas.boundaries_stereotax},'uni', false);
 
     % Write area labels (left hemisphere)
     cellfun(@(x,y) text('Position',fliplr(mean(x{1}+0.05,1)),'String',y, 'Color', [0,0,0.5]), ...
@@ -50,7 +51,7 @@ function  draw_top_down_ccf(plt_data)
         {plt_data.dorsal_cortical_areas.boundaries_stereotax});
 
     % Plot bregma
-    plot(0,0,'.','color',bregma_color','MarkerSize',20);
+    plot(0, 0, 'or', 'MarkerFaceColor', bregma_color, 'MarkerSize', 10);
 
 
 
