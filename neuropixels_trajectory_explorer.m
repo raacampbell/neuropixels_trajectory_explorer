@@ -266,7 +266,7 @@ controls_h(end+1) = uicontrol('Parent',control_panel,'Style','text','FontSize',b
 controls_h(end+1) = uicontrol('Parent',control_panel,'Style','pushbutton','FontSize',button_fontsize, ...
     'Units','normalized','Position',button_position,'String','Export coordinates','Callback',{@nte.export_coordinates,probe_atlas_gui});
 controls_h(end+1) = uicontrol('Parent',control_panel,'Style','pushbutton','FontSize',button_fontsize, ...
-    'Units','normalized','Position',button_position,'String','Load/plot histology','Callback',{@probe_histology,probe_atlas_gui});
+    'Units','normalized','Position',button_position,'String','Load/plot histology','Callback',{@nte.probe_histology,probe_atlas_gui});
 
 set(controls_h(1),'Position',header_text_position+[0,0.9,0,0]);
 align(fliplr(controls_h),'center','distribute');
