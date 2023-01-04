@@ -15,7 +15,12 @@ function td_data = prep_data_for_top_down(av, st)
     % av = nte.return_atlas;
     % tdd = nte.utils.prep_data_for_top_down(av)
     %
-    % Rob Campbell -- SWC 2023
+    % 
+    % Using the code:
+    % To plot brain area boundaries and labels:
+    % nte.utils.draw_top_down_ccf(tdd)
+
+
 
 
 
@@ -70,15 +75,15 @@ function td_data = prep_data_for_top_down(av, st)
         t_name = st.safe_name(plot_areas(curr_area_idx));
 
         % (dorsal areas are all "layer 1" - remove that)
-        t_name = regexprep(t_name,'..ayer 1','');
+        t_name = regexprep(t_name, '..ayer 1', '');
 
         % Remove the term "area", as it's obvious and makes the names long
-        t_name = regexprep(t_name,'area','');
-        t_name = regexprep(t_name,'  ',' ');
+        t_name = regexprep(t_name, 'area', '');
+        t_name = regexprep(t_name, '  ', ' ');
 
         % Replace "Primary" with 1' and "Secondary" with 2'
-        t_name = regexprep(t_name,'Primary','1''');
-        t_name = regexprep(t_name,'Secondary','2''');
+        t_name = regexprep(t_name, 'Primary', '1''');
+        t_name = regexprep(t_name, 'Secondary', '2''');
 
         dorsal_cortical_areas(curr_area_idx).names  = t_name;
     end
