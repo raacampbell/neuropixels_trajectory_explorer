@@ -19,6 +19,12 @@ function td_data = prep_data_for_top_down(av, st)
     % Using the code:
     % To plot brain area boundaries and labels:
     % nte.utils.draw_top_down_ccf(tdd)
+    %
+    % Or to plot the annotations in ARA coords:
+    % imagesc(tdd.X(:),tdd.Y(:),tdd.top_down_annotation)
+    % grid on
+    %
+
 
 
 
@@ -99,11 +105,19 @@ function td_data = prep_data_for_top_down(av, st)
 
     [dorsal_cortical_areas.boundaries_stereotax] = boundaries_stereotax{:};
 
+    % Make meshes to allow the annotation map to be plotted in mm also
+    [X,Y]=meshgrid(1:size(top_down_annotation,2),1:size(top_down_annotation,1));
+
+    X = (X-bregma(3))/100;
+    Y = (bregma(1)-Y)/100;
 
     % Make the output structure
     td_data.dorsal_cortical_areas = dorsal_cortical_areas;
     td_data.plot_areas = plot_areas;
     td_data.top_down_annotation = top_down_annotation;
+    td_data.X = X;
+    td_data.Y = Y;
+
 
 
 
