@@ -1,21 +1,36 @@
-function set_probe_endpoint(h,eventdata,probe_atlas_gui)
+function set_probe_endpoint(~, ~, probe_atlas_gui, new_probe_position)
+    % Sets the probe end point
+    %
+    % If new_probe_position is not supplied, a UI pops up.
+    % If it is supplied, it should be a vector of length five in the order
+    % requested by the GUI: AP mm from bregma, ML pos from bregma, DV pos from bregma, Az angle, El angle (see below)
+    % This input arg allows for debugging or dev of new features. 
+    %
+    % e.g.
+    % pa_gui = neuropixels_trajectory_explorer;
+    % nte.set_probe_endpoint([],[],pa_gui,[2,2,5,0,90])
+
 
     % Get guidata
     gui_data = guidata(probe_atlas_gui);
 
-    % Prompt for angles
-    prompt_text = { ...
-        'AP position (mm from bregma)', ...
-        'ML position (mm from bregma)', ...
-        'DV position (mm from bregma)', ...
-        'Azimuth angle (relative to lambda -> bregma)', ....
-        'Elevation angle (relative to horizontal)'};
+    if nargin<4
+        % Prompt for angles
+        prompt_text = { ...
+            'AP position (mm from bregma)', ...
+            'ML position (mm from bregma)', ...
+            'DV position (mm from bregma)', ...
+            'Azimuth angle (relative to lambda -> bregma)', ....
+            'Elevation angle (relative to horizontal)'};
 
-    new_probe_position_input = inputdlg(prompt_text,'Set probe position',1);
-    if any(cellfun(@isempty,new_probe_position_input))
-       error('Not all coordinates entered'); 
+        new_probe_position_input = inputdlg(prompt_text,'Set probe position',1);
+        if any(cellfun(@isempty,new_probe_position_input))
+           error('Not all coordinates entered'); 
+        end
+        new_probe_position = cellfun(@str2num,new_probe_position_input);
+    else
+        new_probe_position = new_probe_position(:);
     end
-    new_probe_position = cellfun(@str2num,new_probe_position_input);
 
     % Convert degrees to radians
     probe_angle_rad = (new_probe_position(4:5)/360)*2*pi;

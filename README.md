@@ -3,7 +3,20 @@
 # Neuropixels trajectory explorer
 Neuropixels trajectory explorer with the Allen CCF mouse atlas or Waxholm rat atlas. See changelog below for history of updates.
 
+## This branch
 **NOTE: This fork is made in order to develop functionality for a different project. It still works but is substantially refactored comapared with the original and so will likely diverge. **
+
+
+For example, you can set the probe position at the command line as follows:
+```matlab
+% Load atlas then feed in as input args. This is optional but it makes re-starting the GUI faster
+[tv,av,st] = nte.loadAtlas;
+pa_gui = neuropixels_trajectory_explorer(tv,av,st);
+
+% Now set the entry and end points of the probe
+nte.set_probe_entry([],[],pa_gui,[2,2,0,0])
+nte.set_probe_endpoint([],[],pa_gui,[2,2,5,0,90])
+```
 
 **Keep the GUI up-to-date:** there are semi-regular upgrades (sometimes just a feature, sometimes something critical like getting a better estimate of distances and angles), so make sure to pull the current repository whenever planning a new trajectory.
 

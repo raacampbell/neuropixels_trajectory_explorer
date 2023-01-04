@@ -1,8 +1,8 @@
-function neuropixels_trajectory_explorer(tv,av,st)
+function probe_atlas_gui = neuropixels_trajectory_explorer(tv,av,st)
 
 %% Neuropixels Trajectory Explorer
 % 
-% function neuropixels_trajectory_explorer(tv,av,st)
+% function probe_atlas_gui neuropixels_trajectory_explorer(tv,av,st)
 %
 % Example calls:
 % [tv,av,st] = nte.loadAtlas;
