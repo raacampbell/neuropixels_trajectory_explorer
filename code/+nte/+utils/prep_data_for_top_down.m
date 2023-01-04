@@ -108,10 +108,13 @@ function td_data = prep_data_for_top_down(av, st)
     X = (X-bregma(3))/100;
     Y = (bregma(1)-Y)/100;
 
+
     % Make the output structure
+    % NOTE! The X and Y matrices are largish so if space is an issue you can delete and re-make as needed using the above three lines
     td_data.dorsal_cortical_areas = dorsal_cortical_areas;
     td_data.plot_areas = plot_areas;
     td_data.top_down_annotation = top_down_annotation;
     td_data.X = X;
     td_data.Y = Y;
+    td_data.bregma = bregma;
 
