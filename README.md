@@ -18,6 +18,11 @@ nte.set_probe_entry([],[],pa_gui,[2,2,0,0])
 nte.set_probe_endpoint([],[],pa_gui,[2,2,5,0,90])
 ```
 
+This command places a vertical probe at a define AP = -2, ML = 1, and with a DV depth of 4 mm below bregma.
+```matlab
+nte.set_vertical_probe(pa_gui, -2, 1, 4)
+```
+
 **Keep the GUI up-to-date:** there are semi-regular upgrades (sometimes just a feature, sometimes something critical like getting a better estimate of distances and angles), so make sure to pull the current repository whenever planning a new trajectory.
 
 Mouse CCF scaling, rotation, and bregma notes:
