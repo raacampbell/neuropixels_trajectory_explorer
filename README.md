@@ -3,6 +3,8 @@
 # Neuropixels trajectory explorer
 Neuropixels trajectory explorer with the Allen CCF mouse atlas or Waxholm rat atlas. See changelog below for history of updates.
 
+**NOTE: This fork is made in order to develop functionality for a different project. It still works but is substantially refactored comapared with the original and so will likely diverge. **
+
 **Keep the GUI up-to-date:** there are semi-regular upgrades (sometimes just a feature, sometimes something critical like getting a better estimate of distances and angles), so make sure to pull the current repository whenever planning a new trajectory.
 
 Mouse CCF scaling, rotation, and bregma notes:
