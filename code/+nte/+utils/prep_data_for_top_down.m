@@ -1,19 +1,20 @@
-function td_data = prep_data_for_top_down(av, st)
-    % Generate data needed for making the top-down plot
+function td_data = prep_data_for_top_down(atlas_volume, structure_tree)
+    % Process the atlas volume to generate data for top-down plots
     % 
-    % function td_data = prep_data_for_top_down(av, st)
+    % function td_data = prep_data_for_top_down(atlas_volume, structure_tree)
     %
     % Purpose
-    % Generating and processing the data for making the top-down plot is 
-    % fairly time consuming. This function pre-computes the data.
-    % In addition, the pre-computed data are much smaller than the original
-    % and can be cached easily for re-loading with minimal footprint
+    % Generating and processing the data for making the top-down plots is 
+    % fairly time consuming so this function pre-computes the data, allowing
+    % them to be saved for re-use. In addition, the pre-computed data are 
+    % much smaller than the original and can be cached easily for re-loading 
+    % with minimal footprint
     %
     % Example function calls
     % tdd = nte.utils.prep_data_for_top_down;
     %
-    % av = nte.return_atlas;
-    % tdd = nte.utils.prep_data_for_top_down(av)
+    % atlas_volume = nte.return_atlas;
+    % tdd = nte.utils.prep_data_for_top_down(atlas_volume)
     %
     % 
     % Using the code:
@@ -25,25 +26,32 @@ function td_data = prep_data_for_top_down(av, st)
     % grid on
     %
 
-    if nargin < 1 || isempty(av)
-        av = nte.return_atlas;
+
+    % TODO -- option to return cortex only or not
+    % TODO -- clean up so that very small regions are not appearing
+    % TODO -- once all is good could add to the zapit repo
+
+
+
+    if nargin < 1 || isempty(atlas_volume)
+        atlas_volume = nte.return_atlas;
     end
 
-    if nargin < 2 || isempty(st)
-        st = nte.return_structure_tree;
+    if nargin < 2 || isempty(structure_tree)
+        structure_tree = nte.return_structure_tree;
     end
 
 
 
 
     % Get first brain pixel from top-down
-    [~,top_down_depth] = max(av>1, [], 2);
+    [~,top_down_depth] = max(atlas_volume>1, [], 2);
     top_down_depth = squeeze(top_down_depth);
 
 
     % Now get the annotation from the atlas at that point. The annotation tells us the brain area
     [xx,yy] = meshgrid(1:size(top_down_depth,2), 1:size(top_down_depth,1));
-    top_down_annotation = reshape(av(sub2ind(size(av),yy(:),top_down_depth(:),xx(:))), size(av,1), size(av,3));
+    top_down_annotation = reshape(atlas_volume(sub2ind(size(atlas_volume),yy(:),top_down_depth(:),xx(:))), size(atlas_volume,1), size(atlas_volume,3));
 
 
 
@@ -51,7 +59,7 @@ function td_data = prep_data_for_top_down(av, st)
     used_areas = unique(top_down_annotation(:));
 
     % Restrict to only cortical areas
-    structure_id_path = cellfun(@(x) textscan(x(2:end),'%d', 'delimiter',{'/'}),st.structure_id_path);
+    structure_id_path = cellfun(@(x) textscan(x(2:end),'%d', 'delimiter',{'/'}),structure_tree.structure_id_path);
 
     ctx_path = [997,8,567,688,695,315];
     ctx_idx = find(cellfun(@(id) length(id) > length(ctx_path) & ...
@@ -74,7 +82,7 @@ function td_data = prep_data_for_top_down(av, st)
         dorsal_cortical_areas(curr_area_idx).boundaries = ...
             bwboundaries(top_down_annotation == plot_areas(curr_area_idx));
 
-        t_name = st.safe_name(plot_areas(curr_area_idx));
+        t_name = structure_tree.safe_name(plot_areas(curr_area_idx));
 
         % (dorsal areas are all "layer 1" - remove that)
         t_name = regexprep(t_name, '..ayer 1', '');
